@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday My Love ❤️</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+}
+.title-font {
+    font-family: 'Dancing Script', cursive;
+}
+html, body {
+    overflow-x: hidden;
+}
+
+/* COUNTDOWN SCREEN */
+#countdown-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg,#ff9acb,#ffc3e6,#f3d1ff);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    text-align: center;
+    padding: 20px;
+}
+.timer-box {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.time-unit {
+    background: white;
+    padding: 15px 20px;
+    border-radius: 20px;
+    min-width: 70px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+.time-number {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff1493;
+}
+.time-label {
+    font-size: 12px;
+    color: #888;
+}
+
+/* FLOATING HEARTS */
+.heart {
+    position: absolute;
+    font-size: 22px;
+    animation: floatUp 6s linear forwards;
+}
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity:1;}
+    100% { transform: translateY(-800px); opacity:0;}
+}
+</style>
+</head>
+
+<body class="bg-gradient-to-br from-pink-200 via-purple-100 to-rose-200 min-h-screen">
+
+<!-- COUNTDOWN -->
+<div id="countdown-screen">
+    <h1 class="title-font text-5xl sm:text-6xl text-white drop-shadow-lg">
+        Countdown To Your Special Day 💖
+    </h1>
+
+    <div class="timer-box">
+        <div class="time-unit">
+            <div id="days" class="time-number">0</div>
+            <div class="time-label">Days</div>
+        </div>
+        <div class="time-unit">
+            <div id="hours" class="time-number">0</div>
+            <div class="time-label">Hours</div>
+        </div>
+        <div class="time-unit">
+            <div id="minutes" class="time-number">0</div>
+            <div class="time-label">Minutes</div>
+        </div>
+        <div class="time-unit">
+            <div id="seconds" class="time-number">0</div>
+            <div class="time-label">Seconds</div>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN WEBSITE (Hidden initially) -->
+<div id="main-content" class="hidden">
+
+<section class="min-h-screen flex items-center justify-center text-center px-6">
+    <div>
+        <h1 class="title-font text-5xl sm:text-7xl text-pink-600 mb-4">
+            Happy Birthday
+        </h1>
+        <p class="title-font text-4xl sm:text-6xl text-rose-500 mb-8">
+            My Mary ❤️
+        </p>
+
+        <button onclick="launchConfetti()" 
+        class="bg-white text-pink-600 px-6 py-4 rounded-full text-lg shadow-xl hover:scale-110 transition">
+            Celebrate 🎉
+        </button>
+    </div>
+</section>
+
+<section class="py-16 text-center">
+    <h2 class="title-font text-4xl text-pink-600 mb-6">
+        I Love You So Much 💖
+    </h2>
+    <p class="max-w-xl mx-auto text-lg text-gray-700">
+        You are my today and all of my tomorrows.
+        Thank you for being my happiness, my peace,
+        and my forever love.
+    </p>
+</section>
+
+<section class="py-20 text-center bg-pink-600 text-white">
+    <h2 class="text-5xl mb-6">I ❤️ YOU</h2>
+    <button onclick="bigConfetti()" 
+    class="bg-white text-pink-600 px-8 py-4 rounded-full text-xl shadow-xl hover:scale-110 transition">
+        One More Surprise 💋
+    </button>
+</section>
+
+</div>
+
+<script>
+
+/* ======== SET HER BIRTHDAY DATE HERE ======== */
+const birthdayDate = new Date(2026, 1, 27, 0, 0, 0);
+/* ============================================ */
+
+const countdownScreen = document.getElementById("countdown-screen");
+const mainContent = document.getElementById("main-content");
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = birthdayDate - now;
+
+    if (distance <= 0) {
+        clearInterval(timerInterval);
+        revealWebsite();
+        return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((distance / 1000 / 60) % 60);
+    const seconds = Math.floor((distance / 1000) % 60);
+
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
+}
+
+const timerInterval = setInterval(updateCountdown, 1000);
+updateCountdown();
+
+function revealWebsite() {
+    countdownScreen.style.display = "none";
+    mainContent.classList.remove("hidden");
+    launchConfetti();
+    startHearts();
+}
+
+function launchConfetti() {
+    confetti({
+        particleCount: 200,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+}
+
+function bigConfetti() {
+    confetti({
+        particleCount: 400,
+        spread: 120
+    });
+}
+
+function startHearts() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = ["💖","❤️","💗","💓"][Math.floor(Math.random()*4)];
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+    }, 500);
+}
+
+</script>
+
+</body>
+</html>
