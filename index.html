@@ -1,211 +1,512 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday My Love ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Future Wifeeee My Mary! ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .title-font {
+            font-family: 'Dancing Script', cursive;
+        }
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+        /* Cake Styles */
+        .cake-container {
+            width: 320px;
+            height: 280px;
+            position: relative;
+            margin: 0 auto;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .cake {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            height: 180px;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .layer {
+            position: absolute;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        .bottom-layer {
+            width: 280px;
+            height: 70px;
+            background: linear-gradient(#8B4513, #A0522D);
+            bottom: 0;
+            left: 0;
+        }
+        .middle-layer {
+            width: 240px;
+            height: 60px;
+            background: linear-gradient(#CD853F, #D2A679);
+            bottom: 65px;
+            left: 20px;
+        }
+        .top-layer {
+            width: 200px;
+            height: 50px;
+            background: linear-gradient(#E6B87D, #F4D9B0);
+            bottom: 120px;
+            left: 40px;
+        }
+        .icing {
+            position: absolute;
+            width: 200px;
+            height: 35px;
+            background: linear-gradient(#FFF0F5, #FFB6C1);
+            border-radius: 50% 50% 0 0;
+            bottom: 165px;
+            left: 40px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        .cherry {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: #FF1493;
+            border-radius: 50%;
+            top: -8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .candle {
+            position: absolute;
+            width: 12px;
+            height: 55px;
+            background: linear-gradient(#FFF, #FFCCCC);
+            border-radius: 50% 50% 10% 10%;
+            bottom: 190px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .candle.lit .flame {
+            opacity: 1;
+            animation: flicker 0.8s infinite alternate;
+        }
+        .wick {
+            position: absolute;
+            width: 3px;
+            height: 12px;
+            background: #333;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .flame {
+            position: absolute;
+            width: 18px;
+            height: 28px;
+            background: radial-gradient(circle at 30% 20%, #FF4500, #FFD700 40%, transparent);
+            border-radius: 50% 50% 40% 40%;
+            top: -32px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            filter: blur(2px);
+            box-shadow: 0 0 15px #FF4500, 0 0 30px #FFD700;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        @keyframes flicker {
+            0% { transform: scale(1) translateY(0); }
+            50% { transform: scale(1.15) translateY(-3px); }
+            100% { transform: scale(0.95) translateY(2px); }
+        }
 
-<style>
-body {
-    font-family: 'Poppins', sans-serif;
-}
-.title-font {
-    font-family: 'Dancing Script', cursive;
-}
-html, body {
-    overflow-x: hidden;
-}
+        /* Split cake animation */
+        .cake.split .bottom-layer,
+        .cake.split .middle-layer,
+        .cake.split .top-layer,
+        .cake.split .icing {
+            transition: all 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .cake.split .left-half {
+            transform: translateX(-90px) rotate(-12deg) !important;
+        }
+        .cake.split .right-half {
+            transform: translateX(90px) rotate(12deg) !important;
+        }
 
-/* COUNTDOWN SCREEN */
-#countdown-screen {
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(135deg,#ff9acb,#ffc3e6,#f3d1ff);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    text-align: center;
-    padding: 20px;
-}
-.timer-box {
-    display: flex;
-    gap: 15px;
-    margin-top: 30px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.time-unit {
-    background: white;
-    padding: 15px 20px;
-    border-radius: 20px;
-    min-width: 70px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-}
-.time-number {
-    font-size: 28px;
-    font-weight: bold;
-    color: #ff1493;
-}
-.time-label {
-    font-size: 12px;
-    color: #888;
-}
+        /* Flying hearts */
+        .heart {
+            position: absolute;
+            font-size: 28px;
+            color: #FF1493;
+            pointer-events: none;
+            animation: floatUp 4s linear forwards;
+            z-index: 50;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-800px) scale(0.6); opacity: 0; }
+        }
 
-/* FLOATING HEARTS */
-.heart {
-    position: absolute;
-    font-size: 22px;
-    animation: floatUp 6s linear forwards;
-}
-@keyframes floatUp {
-    0% { transform: translateY(0); opacity:1;}
-    100% { transform: translateY(-800px); opacity:0;}
-}
-</style>
+        /* Typewriter */
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid #FF1493;
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 4s steps(40, end) forwards, blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #FF1493; }
+        }
+
+        /* Modal */
+        .modal {
+            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
 </head>
+<body class="bg-gradient-to-br from-pink-200 via-purple-100 to-rose-200 min-h-screen overflow-x-hidden">
 
-<body class="bg-gradient-to-br from-pink-200 via-purple-100 to-rose-200 min-h-screen">
+    <!-- HERO -->
+    <section id="hero" class="min-h-screen flex items-center justify-center relative">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,#ff69b440_0%,transparent_70%)]"></div>
+        <div class="text-center z-10 px-6">
+            <div class="mb-8 flex justify-center">
+                <div onclick="launchConfetti()" class="text-9xl animate-bounce cursor-pointer">🎂</div>
+            </div>
+            <h1 class="title-font text-8xl md:text-[120px] leading-none text-pink-600 mb-4 tracking-wider">
+                Happy Birthday
+            </h1>
+            <p id="her-name" class="title-font text-7xl md:text-8xl text-rose-500 mb-8">My Mary ❤️</p>
+            
+            <div class="flex justify-center gap-6 text-4xl mb-12">
+                <span class="animate-pulse">💕</span>
+                <span class="animate-pulse delay-300">✨</span>
+                <span class="animate-pulse delay-700">🌸</span>
+            </div>
+            
+            <button onclick="document.getElementById('cake-section').scrollIntoView({ behavior: 'smooth' })" 
+                    class="bg-white text-pink-600 px-10 py-5 rounded-full text-2xl font-semibold shadow-xl hover:shadow-2xl transition-all hover:scale-110">
+                Let's Celebrate 🎉
+            </button>
+        </div>
 
-<!-- COUNTDOWN -->
-<div id="countdown-screen">
-    <h1 class="title-font text-5xl sm:text-6xl text-white drop-shadow-lg">
-        Countdown To Your Special Day 💖
-    </h1>
+        <!-- Floating hearts background -->
+        <div id="hero-hearts" class="absolute inset-0 pointer-events-none"></div>
+    </section>
 
-    <div class="timer-box">
-        <div class="time-unit">
-            <div id="days" class="time-number">0</div>
-            <div class="time-label">Days</div>
+    <!-- CAKE SECTION -->
+    <section id="cake-section" class="py-24 bg-white/70">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="title-font text-6xl text-pink-600 mb-4">Cut the Cake, Baby! 🎂</h2>
+            <p class="text-2xl text-gray-600 mb-12">Light the candles first... then cut! Each light = one big kiss from me 💋</p>
+
+            <div class="cake-container mx-auto" id="cake-wrapper">
+                <!-- Candles -->
+                <div id="candles" class="flex justify-center gap-8 relative z-20" style="bottom: 210px;">
+                    <!-- Candles added by JS -->
+                </div>
+
+                <!-- Cake -->
+                <div class="cake" id="cake">
+                    <div class="left-half">
+                        <div class="layer bottom-layer"></div>
+                        <div class="layer middle-layer"></div>
+                        <div class="layer top-layer"></div>
+                        <div class="icing"></div>
+                    </div>
+                    <div class="right-half">
+                        <div class="layer bottom-layer"></div>
+                        <div class="layer middle-layer"></div>
+                        <div class="layer top-layer"></div>
+                        <div class="icing"></div>
+                    </div>
+                    
+                    <!-- Cherries -->
+                    <div class="cherry" style="left: 80px;"></div>
+                    <div class="cherry" style="left: 140px;"></div>
+                    <div class="cherry" style="left: 200px;"></div>
+                </div>
+            </div>
+
+            <div class="mt-12 flex justify-center gap-6">
+                <button onclick="lightAllCandles()" 
+                        class="bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 rounded-2xl text-xl font-medium transition-all">
+                    ✨ Light All Candles ✨
+                </button>
+                
+                <button onclick="cutCake()" id="cut-btn"
+                        class="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white px-8 py-4 rounded-2xl text-xl font-medium transition-all opacity-50 cursor-not-allowed" disabled>
+                    🔪 Cut the Cake!
+                </button>
+            </div>
+
+            <!-- Revealed message after cut -->
+            <div id="cake-reveal" class="hidden mt-16 text-4xl title-font text-pink-600 bg-white/80 py-6 px-12 rounded-3xl shadow-2xl inline-block">
+                The sweetest thing in my life is YOU 💖<br>
+                <span class="text-2xl block mt-4">Happy Birthday, my forever love!</span>
+            </div>
         </div>
-        <div class="time-unit">
-            <div id="hours" class="time-number">0</div>
-            <div class="time-label">Hours</div>
+    </section>
+
+    <!-- SPECIAL MESSAGE -->
+    <section class="py-24 bg-gradient-to-b from-transparent via-pink-100 to-transparent">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <div onclick="openMessage()" class="cursor-pointer mx-auto w-80 h-80 bg-white rounded-3xl shadow-2xl flex items-center justify-center border-8 border-pink-200 hover:border-pink-400 transition-all">
+                <div class="text-center">
+                    <div class="text-8xl mb-4">💌</div>
+                    <p class="text-3xl title-font text-pink-600">Open My Letter For You</p>
+                </div>
+            </div>
         </div>
-        <div class="time-unit">
-            <div id="minutes" class="time-number">0</div>
-            <div class="time-label">Minutes</div>
+    </section>
+
+    <!-- SONG -->
+    <section class="py-24 bg-gradient-to-br from-purple-100 to-pink-100">
+        <div class="max-w-md mx-auto px-6 text-center">
+            <h2 class="title-font text-6xl text-pink-600 mb-8">Our Song 🎵</h2>
+            <div class="bg-white rounded-3xl p-8 shadow-xl">
+                <audio id="birthday-song" class="w-full mb-6" controls>
+                    <source src="Perfect-(Mr-Jat.in).mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="text-gray-500 text-sm">Play our favorite song or any song that reminds you of us 💃</p>
+                <p class="text-xs mt-6 text-pink-400">💡 Tip: Replace the src with a direct mp3 link of your special song</p>
+            </div>
         </div>
-        <div class="time-unit">
-            <div id="seconds" class="time-number">0</div>
-            <div class="time-label">Seconds</div>
+    </section>
+
+    <!-- FINAL LOVE -->
+    <section class="py-32 text-center bg-pink-600 text-white relative overflow-hidden">
+        <div class="max-w-2xl mx-auto px-6">
+            <div class="text-8xl mb-8 animate-bounce">I ❤️ YOU</div>
+            <p class="text-4xl title-font mb-12">You are my today and all of my tomorrows</p>
+            <button onclick="finalSurprise()" 
+                    class="bg-white text-pink-600 px-12 py-6 rounded-full text-3xl font-bold hover:scale-110 transition-all shadow-2xl">
+                One More Kiss 💋
+            </button>
+        </div>
+        <div id="final-hearts" class="absolute inset-0 pointer-events-none"></div>
+    </section>
+
+    <!-- MESSAGE MODAL -->
+    <div id="message-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+        <div class="modal bg-white rounded-3xl max-w-lg w-full mx-4 p-10 relative">
+            <button onclick="closeMessage()" class="absolute top-6 right-6 text-4xl text-gray-300 hover:text-pink-500">×</button>
+            
+            <div class="text-center mb-8">
+                <div class="text-7xl mb-4">💖</div>
+                <h3 class="title-font text-5xl text-pink-600">To My Beautiful Future Wifeee</h3>
+            </div>
+            
+            <div id="typewriter-text" class="text-xl leading-relaxed text-gray-700 min-h-[240px]">
+                <!-- Filled by JS -->
+            </div>
+            
+            <div class="text-right mt-10 text-pink-400 font-medium">— Forever yours, Ayush ❤️</div>
         </div>
     </div>
-</div>
 
-<!-- MAIN WEBSITE (Hidden initially) -->
-<div id="main-content" class="hidden">
+    <script>
+        // Tailwind script already loaded
+        function initTailwind() {
+            // Already included via CDN
+        }
 
-<section class="min-h-screen flex items-center justify-center text-center px-6">
-    <div>
-        <h1 class="title-font text-5xl sm:text-7xl text-pink-600 mb-4">
-            Happy Birthday
-        </h1>
-        <p class="title-font text-4xl sm:text-6xl text-rose-500 mb-8">
-            My Mary ❤️
-        </p>
+        // Confetti
+        function launchConfetti() {
+            confetti({
+                particleCount: 200,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
 
-        <button onclick="launchConfetti()" 
-        class="bg-white text-pink-600 px-6 py-4 rounded-full text-lg shadow-xl hover:scale-110 transition">
-            Celebrate 🎉
-        </button>
-    </div>
-</section>
+        function bigConfetti() {
+            const count = 300;
+            const defaults = { origin: { y: 0.7 } };
+            
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+            
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
+        }
 
-<section class="py-16 text-center">
-    <h2 class="title-font text-4xl text-pink-600 mb-6">
-        I Love You So Much 💖
-    </h2>
-    <p class="max-w-xl mx-auto text-lg text-gray-700">
-        You are my today and all of my tomorrows.
-        Thank you for being my happiness, my peace,
-        and my forever love.
-    </p>
-</section>
+        // Flying hearts
+        function createHeart(container) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = ['💖','❤️','💗','💓'][Math.floor(Math.random()*4)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.opacity = Math.random() * 0.7 + 0.5;
+            container.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 7000);
+        }
 
-<section class="py-20 text-center bg-pink-600 text-white">
-    <h2 class="text-5xl mb-6">I ❤️ YOU</h2>
-    <button onclick="bigConfetti()" 
-    class="bg-white text-pink-600 px-8 py-4 rounded-full text-xl shadow-xl hover:scale-110 transition">
-        One More Surprise 💋
-    </button>
-</section>
+        function startFloatingHearts() {
+            const hero = document.getElementById('hero-hearts');
+            setInterval(() => {
+                if (Math.random() > 0.4) createHeart(hero);
+            }, 300);
+            
+            // Final section hearts
+            const final = document.getElementById('final-hearts');
+            setInterval(() => {
+                if (Math.random() > 0.5) createHeart(final);
+            }, 200);
+        }
 
-</div>
+        // Cake logic
+        let litCandles = 0;
+        const totalCandles = 7;
+        
+        function createCandles() {
+            const container = document.getElementById('candles');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < totalCandles; i++) {
+                const candle = document.createElement('div');
+                candle.className = `candle flex flex-col items-center`;
+                candle.style.marginLeft = (i * 28 - 80) + 'px';
+                
+                candle.innerHTML = `
+                    <div class="wick"></div>
+                    <div class="flame"></div>
+                    <div class="w-3 h-14 bg-gradient-to-t from-white to-pink-100 rounded-t"></div>
+                `;
+                
+                candle.onclick = () => {
+                    if (!candle.classList.contains('lit')) {
+                        candle.classList.add('lit');
+                        litCandles++;
+                        launchConfetti();
+                        
+                        if (litCandles === totalCandles) {
+                            document.getElementById('cut-btn').classList.remove('opacity-50', 'cursor-not-allowed');
+                            document.getElementById('cut-btn').disabled = false;
+                        }
+                    }
+                };
+                container.appendChild(candle);
+            }
+        }
 
-<script>
+        function lightAllCandles() {
+            const candles = document.querySelectorAll('.candle');
+            candles.forEach((c, i) => {
+                setTimeout(() => {
+                    c.classList.add('lit');
+                    litCandles = totalCandles;
+                    launchConfetti();
+                }, i * 120);
+            });
+            document.getElementById('cut-btn').classList.remove('opacity-50', 'cursor-not-allowed');
+            document.getElementById('cut-btn').disabled = false;
+        }
 
-/* ======== SET HER BIRTHDAY DATE HERE ======== */
-const birthdayDate = new Date(2026, 1, 27, 0, 0, 0);
-/* ============================================ */
+        function cutCake() {
+            const cake = document.getElementById('cake');
+            cake.classList.add('split');
+            
+            bigConfetti();
+            
+            // Reveal message
+            setTimeout(() => {
+                document.getElementById('cake-reveal').classList.remove('hidden');
+                document.getElementById('cake-reveal').classList.add('animate-bounce');
+            }, 800);
+            
+            // Extra hearts
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => createHeart(document.getElementById('cake-wrapper')), i * 40);
+            }
+        }
 
-const countdownScreen = document.getElementById("countdown-screen");
-const mainContent = document.getElementById("main-content");
+        // Message modal + typewriter
+        const specialMessage = `My dearest love,
 
-function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = birthdayDate - now;
+Every day with you feels like a beautiful dream I never want to wake up from. 
+You make my heart skip beats, you fill my life with laughter, color, and endless joy.
 
-    if (distance <= 0) {
-        clearInterval(timerInterval);
-        revealWebsite();
-        return;
-    }
+On your special day, I want to thank you for being the most amazing girlfriend, 
+my best friend, my safe place, and the love of my life.
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((distance / 1000 / 60) % 60);
-    const seconds = Math.floor((distance / 1000) % 60);
+May this year bring you all the happiness you deserve (and more kisses from me 😉).
 
-    document.getElementById("days").textContent = days;
-    document.getElementById("hours").textContent = hours;
-    document.getElementById("minutes").textContent = minutes;
-    document.getElementById("seconds").textContent = seconds;
-}
+I love you more than all the stars in the sky.
 
-const timerInterval = setInterval(updateCountdown, 1000);
-updateCountdown();
+Forever and always,
+Ayush 💕`;
 
-function revealWebsite() {
-    countdownScreen.style.display = "none";
-    mainContent.classList.remove("hidden");
-    launchConfetti();
-    startHearts();
-}
+        function openMessage() {
+            const modal = document.getElementById('message-modal');
+            const textEl = document.getElementById('typewriter-text');
+            modal.classList.remove('hidden');
+            textEl.innerHTML = '';
+            
+            let i = 0;
+            const type = () => {
+                if (i < specialMessage.length) {
+                    textEl.innerHTML += specialMessage.charAt(i) === '\n' ? '<br><br>' : specialMessage.charAt(i);
+                    i++;
+                    setTimeout(type, 30);
+                }
+            };
+            type();
+            
+            bigConfetti();
+        }
 
-function launchConfetti() {
-    confetti({
-        particleCount: 200,
-        spread: 70,
-        origin: { y: 0.6 }
-    });
-}
+        function closeMessage() {
+            document.getElementById('message-modal').classList.add('hidden');
+        }
 
-function bigConfetti() {
-    confetti({
-        particleCount: 400,
-        spread: 120
-    });
-}
+        // Memories grid (replace these URLs with your real couple photos!)
+        function createMemories() {
+            const photos = [
+                "https://picsum.photos/id/1015/600/800", // replace
+                "https://picsum.photos/id/1027/600/800",
+                "https://picsum.photos/id/106/600/800",
+                "https://picsum.photos/id/133/600/800",
+                "https://picsum.photos/id/201/600/800",
+                "https://picsum.photos/id/237/600/800"
+            ];
+            
+            const grid = document.getElementById('memories-grid');
+            grid.innerHTML = '';
+            
+          
+        }
 
-function startHearts() {
-    setInterval(() => {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.textContent = ["💖","❤️","💗","💓"][Math.floor(Math.random()*4)];
-        heart.style.left = Math.random() * window.innerWidth + "px";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 6000);
-    }, 500);
-}
-
-</script>
-
-</body>
-</html>
+        // Final surprise
+        function finalSurprise() {
+            bigConfetti();
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => createHeart(document.getElementById('final-hearts')), i * 30);
+            }
+            
+            const msg = document.createElement('div');
+            msg.style.position = 'fixed';
+  
